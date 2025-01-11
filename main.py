@@ -24,10 +24,34 @@ buttons = [
 clear = QPushButton("Clear")
 delete = QPushButton("<")
 
+
+
+def button_click():
+    button = app.sender() # trace which button is clicked
+    text = button.text() # extract the text value 
+    
+    if text=="=":
+        symbol = display.text()
+        try:
+            res = eval(symbol)
+            display.setText(str(res))
+        except Exception as e:
+            print("error")
+    elif text=="Clear":
+        display.clear()
+    elif text=="<":
+        current_value = display.text()
+        display.setText(current_value[:-1])
+    else:
+        current_value = display.text()
+        display.setText(current_value+text)
+        
+
 row=0
 col=0
 for btn in buttons:
     button = QPushButton(btn)
+    button.clicked.connect(button_click)
     grid.addWidget(button,row,col)
     col+=1
     if col>3:
@@ -47,6 +71,9 @@ button_row.addWidget(delete)
 master_layout.addLayout(button_row)
 
 main_window.setLayout(master_layout)
+
+clear.clicked.connect(button_click)
+delete.clicked.connect(button_click)
 # run the app
 main_window.show()
 app.exec()
