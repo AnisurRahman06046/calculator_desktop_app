@@ -6,7 +6,7 @@ from PyQt6.QtCore import Qt
 app = QApplication([])
 main_window = QWidget()
 main_window.setWindowTitle("Cal2025")
-main_window.resize(600,600)
+main_window.resize(250,200)
 
 
 # all objects
@@ -21,7 +21,22 @@ buttons = [
     "0",".","=","+"
 ]
 
+clear = QPushButton("Clear")
+delete = QPushButton("<")
 
+# design
+master_layout = QVBoxLayout()
+
+master_layout.addWidget(display)
+master_layout.addLayout(grid)
+
+button_row = QHBoxLayout()
+button_row.addWidget(clear)
+button_row.addWidget(delete)
+
+master_layout.addLayout(button_row)
+
+main_window.setLayout(master_layout)
 # run the app
 main_window.show()
 app.exec()
